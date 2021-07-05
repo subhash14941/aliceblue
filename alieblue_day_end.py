@@ -6,7 +6,7 @@ body =  {}
 def getHeaders(access_token):
     return {'content-type': 'application/json','Authorization':'Bearer '+access_token};
 def get_orders(access_token):   
-    r = requests.get(url+'/api/v2/order', data=json.dumps(body), headers=getHeaders())
+    r = requests.get(url+'/api/v2/order', data=json.dumps(body), headers=getHeaders(access_token))
     return r.json();
 def net_positions(access_token):
     r = requests.get(url+'/api/v2/positions?type=netwise', data=json.dumps(body), headers=getHeaders(access_token))
@@ -21,7 +21,7 @@ def cancel_cover_order(access_token,oid):
         for j in data[key]:            
             if int(j['oms_order_id'])==int(oid):
                 leg_order_id=j['leg_order_indicator']
-                r = requests.delete(url+'/api/v2/coverorder?oms_order_id='+str(oid)+'&leg_order_indicator='+str(leg_order_id), data=json.dumps(body), headers=getHeaders())
+                r = requests.delete(url+'/api/v2/coverorder?oms_order_id='+str(oid)+'&leg_order_indicator='+str(leg_order_id), data=json.dumps(body), headers=getHeaders(access_token))
                 return r.json();
 
 def market_order(access_token,exchange,i_token,qty,ttype):
